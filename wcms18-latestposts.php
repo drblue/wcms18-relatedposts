@@ -40,8 +40,8 @@ function wlp_shortcode($user_atts = [], $content = null, $tag = '') {
 			$output .= get_the_category_list(', ');
 			$output .= " by ";
 			$output .= get_the_author();
-			$output .= " at ";
-			$output .= get_the_date('Y-m-d H:i:s');
+			$output .= " ";
+			$output .= human_time_diff(get_the_time('U')) . ' ago';
 			$output .= "</small>";
 
 			$output .= "</li>";
