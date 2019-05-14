@@ -13,12 +13,19 @@
  */
 
 
-function wlp_shortcode() {
+function wlp_shortcode($user_atts = [], $content = null, $tag = '') {
+	$default_atts = [
+		'posts' => 3,
+		'title' => __('Latest Posts', 'wcms18-latestposts'),
+	];
+
+	$atts = shortcode_atts($default_atts, $user_atts, $tag);
+
 	$posts = new WP_Query([
-		'posts_per_page' => 3,
+		'posts_per_page' => $atts['posts'],
 	]);
 
-	$output = "<h2>Latest Posts</h2>";
+	$output = "<h2>" . esc_html($atts['title']) . "</h2>";
 	if ($posts->have_posts()) {
 		$output .= "<ul>";
 		while ($posts->have_posts()) {
