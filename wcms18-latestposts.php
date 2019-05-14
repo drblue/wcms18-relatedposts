@@ -34,6 +34,16 @@ function wlp_shortcode($user_atts = [], $content = null, $tag = '') {
 			$output .= "<a href='" . get_the_permalink() . "'>";
 			$output .= get_the_title();
 			$output .= "</a>";
+
+			$output .= "<small>";
+			$output .= " in ";
+			$output .= get_the_category_list(', ');
+			$output .= " by ";
+			$output .= get_the_author();
+			$output .= " at ";
+			$output .= get_the_date('Y-m-d H:i:s');
+			$output .= "</small>";
+
 			$output .= "</li>";
 		}
 		wp_reset_postdata();
