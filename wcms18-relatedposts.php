@@ -17,13 +17,17 @@ function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
 	$default_atts = [
 		'posts' => 3,
 		'title' => __('Related Posts', 'wcms18-relatedposts'),
+		'categories' => null,
+		'post' => get_the_ID(),
 	];
 
 	$atts = shortcode_atts($default_atts, $user_atts, $tag);
 
-	$current_post_id = get_the_ID();
-
-	$category_ids = wp_get_post_terms($current_post_id, 'category', ['fields' => 'ids']);
+	if (!empty($atts['categories'])) {
+		$category_ids = explode(',', $atts['categories']);
+	} else {
+		$category_ids = wp_get_post_terms($atts['post'], 'category', ['fields' => 'ids']);
+	}
 
 	$posts = new WP_Query([
 		'posts_per_page' => $atts['posts'],
