@@ -12,6 +12,12 @@
  * Domain Path: /languages
  */
 
+require("class.RelatedPostsWidget.php");
+
+function wrp_widgets_init() {
+	register_widget('RelatedPostsWidget');
+}
+add_action('widgets_init', 'wrp_widgets_init');
 
 function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
 	$default_atts = [
@@ -35,7 +41,10 @@ function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
 		'category__in' => $category_ids,
 	]);
 
-	$output = "<h2>" . esc_html($atts['title']) . "</h2>";
+	$output = "";
+	if ($atts['title']) {
+		"<h2>" . esc_html($atts['title']) . "</h2>";
+	}
 	// $output = "category_ids: <pre>" . print_r($category_ids, true) . "</pre>";
 	if ($posts->have_posts()) {
 		$output .= "<ul>";
