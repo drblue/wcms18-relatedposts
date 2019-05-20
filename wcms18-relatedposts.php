@@ -15,4 +15,5 @@
 require("inc/functions.php");
 require("inc/filters.php");
 require("inc/shortcodes.php");
+require("inc/settings.php");
 require("inc/widgets.php");
