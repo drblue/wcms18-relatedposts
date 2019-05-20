@@ -40,9 +40,9 @@ class RelatedPostsWidget extends WP_Widget {
 		}
 
 		// content
-		$num_posts = $instance['num_posts'];
 		echo wrp_get_related_posts([
-			'posts' => $num_posts,
+			'show_metadata' => $instance['show_metadata'],
+			'posts' => $instance['num_posts'],
 			'title' => false,
 		]);
 
