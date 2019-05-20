@@ -1,9 +1,11 @@
 <?php
 
 function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
+	$default_title = get_option('wrp_default_title', __('Related Posts', 'wcms18-relatedposts'));
+
 	$default_atts = [
 		'posts' => 3,
-		'title' => __('Related Posts', 'wcms18-relatedposts'),
+		'title' => $default_title,
 		'categories' => null,
 		'post' => get_the_ID(),
 		'show_metadata' => true,
