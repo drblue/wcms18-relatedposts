@@ -1,6 +1,10 @@
 <?php
 
 function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
+	if (!is_single()) {
+		return;
+	}
+
 	$default_title = get_option('wrp_default_title', __('Related Posts', 'wcms18-relatedposts'));
 
 	$default_atts = [

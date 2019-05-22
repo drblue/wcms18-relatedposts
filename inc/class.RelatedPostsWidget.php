@@ -28,6 +28,10 @@ class RelatedPostsWidget extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget($args, $instance) {
+		if (!is_single()) {
+			return;
+		}
+
 		extract($args);
 		$title = apply_filters('widget_title', $instance['title']);
 
