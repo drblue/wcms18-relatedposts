@@ -42,6 +42,7 @@ class RelatedPostsWidget extends WP_Widget {
 		// content
 		echo wrp_get_related_posts([
 			'show_metadata' => $instance['show_metadata'],
+			'categories' => $instance['categories'],
 			'posts' => $instance['num_posts'],
 			'title' => false,
 		]);
@@ -61,8 +62,12 @@ class RelatedPostsWidget extends WP_Widget {
 		if (isset($instance['title'])) {
 			$title = $instance['title'];
 		} else {
-			$title = __('Related Posts', 'wcms18-relatedposts-widget');
+			$title = get_option('wrp_default_title', __('Related Posts', 'wcms18-relatedposts'));
 		}
+
+		$categories = isset($instance['categories'])
+			? $instance['categories']
+			: '';
 
 		if (isset($instance['num_posts'])) {
 			$num_posts = $instance['num_posts'];
@@ -81,7 +86,7 @@ class RelatedPostsWidget extends WP_Widget {
 			<label
 				for="<?php echo $this->get_field_name('title'); ?>"
 			>
-				<?php _e('Title:'); ?>
+				<?php _e('Title:', 'wcms18-relatedposts-widget'); ?>
 			</label>
 
 			<input
@@ -94,12 +99,31 @@ class RelatedPostsWidget extends WP_Widget {
 		 </p>
 		 <!-- /title -->
 
+		<!-- categories -->
+		<p>
+			<label
+				for="<?php echo $this->get_field_name('categories'); ?>"
+			>
+				<?php _e('Categories to get related posts from:', 'wcms18-relatedposts-widget'); ?>
+			</label>
+
+			<input
+				class="widefat"
+				id="<?php echo $this->get_field_id('categories'); ?>"
+				name="<?php echo $this->get_field_name('categories'); ?>"
+				type="text"
+				placeholder="<?php _e('Category IDs (comma-separated plz)', 'wcms18-relatedposts-widget'); ?>"
+				value="<?php echo $categories; ?>"
+			/>
+		 </p>
+		 <!-- /categories -->
+
 		<!-- number of posts to show -->
 		<p>
 			<label
 				for="<?php echo $this->get_field_name('num_posts'); ?>"
 			>
-				<?php _e('Number of posts to show:'); ?>
+				<?php _e('Number of posts to show:', 'wcms18-relatedposts-widget'); ?>
 			</label>
 
 			<input
@@ -149,6 +173,10 @@ class RelatedPostsWidget extends WP_Widget {
 
 		$instance['title'] = (!empty($new_instance['title']))
 			? strip_tags($new_instance['title'])
+			: '';
+
+		$instance['categories'] = (!empty($new_instance['categories']))
+			? str_replace(' ', '', strip_tags($new_instance['categories']))
 			: '';
 
 		$instance['num_posts'] = (!empty($new_instance['num_posts']) && $new_instance['num_posts'] > 0)

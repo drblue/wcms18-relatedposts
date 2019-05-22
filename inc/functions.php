@@ -11,6 +11,10 @@ function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
 		'show_metadata' => true,
 	];
 
+	if (isset($user_atts['show_metadata']) && $user_atts['show_metadata'] === 'false') {
+		$user_atts['show_metadata'] = false;
+	}
+
 	$atts = shortcode_atts($default_atts, $user_atts, $tag);
 
 	if (!empty($atts['categories'])) {
@@ -21,7 +25,7 @@ function wrp_get_related_posts($user_atts = [], $content = null, $tag = '') {
 
 	$posts = new WP_Query([
 		'posts_per_page' => $atts['posts'],
-		'post__not_in' => [$current_post_id],
+		'post__not_in' => [$atts['post']],
 		'category__in' => $category_ids,
 	]);
 
